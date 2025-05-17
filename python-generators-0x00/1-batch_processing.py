@@ -1,17 +1,17 @@
-from seed import connect_to_prodev
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import select
+from sqlalchemy import select, create_engine
 from models import User
 
 
 def stream_users_in_batches(batch_size):
     
-    engine = connect_to_prodev()
+    engine = create_engine('mysql+pymysql://alx_user:alx_password@192.168.96.2:3306/ALX_prodev')
     Session = sessionmaker(bind=engine)
     session = Session()
 
     with Session() as session:
         counter = 0
+        # "FROM user_data", "SELECT"
         stmt = select(User)
         user_obj = session.scalars(stmt)
         for user in user_obj:
@@ -28,7 +28,7 @@ def stream_users_in_batches(batch_size):
 
 def batch_processing(batch_size):
 
-    engine = connect_to_prodev()
+    engine = create_engine('mysql+pymysql://alx_user:alx_password@192.168.96.2:3306/ALX_prodev')
     Session = sessionmaker(bind=engine)
     session = Session()
 
