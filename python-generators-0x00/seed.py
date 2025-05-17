@@ -99,4 +99,4 @@ if __name__ == "__main__":
     if engine:
         create_table(engine)
 
-    insert_data(engine, 'user_data.csv')
+    insert_data(engine, 'python-generators-0x00/user_data.csv')
