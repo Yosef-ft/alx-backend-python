@@ -1,8 +1,8 @@
--- Active: 1747702231422@@192.168.128.2@3306
-CREATE TABLE users(
-  name varchar, 
-  age int,
-  phone_number varchar
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  name VARCHAR(255),
+  age INTEGER,
+  phone_number VARCHAR(20)
 );
 
 
