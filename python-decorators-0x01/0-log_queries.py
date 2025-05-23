@@ -1,10 +1,11 @@
 import sqlite3
 import functools
+from datetime import datetime
 
 #### decorator to log SQL queries
 def log_queries(func):
-    def print_queries(query):
-        print(query)
+    def print_queries(query):    
+        print(f"Query: {query} \n Datetime: {datetime.now()}")
     return print_queries
 
 @log_queries
