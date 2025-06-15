@@ -4,6 +4,9 @@ Unit test for utils
 import unittest
 from utils import *
 from parameterized import parameterized
+from unittest.mock import patch, MagicMock
+import requests
+import json
 from typing import (
     Mapping,
     Sequence,
@@ -28,6 +31,23 @@ class TestAccessNestedMap(unittest.TestCase):
         '''
         result = access_nested_map(nested_map, path)
         self.assertEqual(result, expected_output)
+
+
+class TestGetJson(unittest.TestCase):
+    '''
+    Class to test get json
+    '''
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
+    @patch('requests.get')
+    def test_get_json(self, test_url, test_payload, mock_request):
+
+        mock_request.return_value.json.return_value = test_payload
+
+        payload = get_json(test_url)
+        self.assertEqual(payload, test_payload)
 
 
 
