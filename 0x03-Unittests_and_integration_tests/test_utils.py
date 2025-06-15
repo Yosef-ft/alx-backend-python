@@ -43,6 +43,9 @@ class TestGetJson(unittest.TestCase):
     ])
     @patch('requests.get')
     def test_get_json(self, test_url, test_payload, mock_request):
+        '''
+        Function to test get_json
+        '''
 
         mock_request.return_value.json.return_value = test_payload
 
@@ -50,6 +53,30 @@ class TestGetJson(unittest.TestCase):
         self.assertEqual(payload, test_payload)
 
 
+class TestMemoize(unittest.TestCase):
+    '''
+    A class to test memorize function
+    '''
+    class TestClass:
+        def a_method(self):
+            return 42
+
+        @memoize
+        def a_property(self):
+            return self.a_method()
+
+    def test_memoize(self):
+        with patch.object(self.TestClass, 'a_method') as mock_a_method:
+            mock_a_method.return_value = 42
+
+            instance = self.TestClass()
+            result1 = instance.a_property
+            result2 = instance.a_property
+
+            mock_a_method.assert_called_once()
+            
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)              
 
 if __name__ == '__main__':
     unittest.main()        
