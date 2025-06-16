@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 '''
 Unit test for utils 
 '''
@@ -58,14 +59,26 @@ class TestMemoize(unittest.TestCase):
     A class to test memorize function
     '''
     class TestClass:
+        '''
+        Test class
+        '''
         def a_method(self):
+            '''
+            Function to return 42
+            '''
             return 42
 
         @memoize
         def a_property(self):
+            '''
+            function to be memorized by decorator
+            '''
             return self.a_method()
 
     def test_memoize(self):
+        '''
+        Function to test memorize
+        '''
         with patch.object(self.TestClass, 'a_method') as mock_a_method:
             mock_a_method.return_value = 42
 
@@ -79,4 +92,5 @@ class TestMemoize(unittest.TestCase):
             self.assertEqual(result2, 42)              
 
 if __name__ == '__main__':
-    unittest.main()        
+    unittest.main()    
+    
