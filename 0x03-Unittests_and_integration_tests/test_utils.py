@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Unit test for utils 
+Unit test for utils
 '''
 import unittest
 from utils import *
@@ -26,7 +26,8 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self,nested_map: Mapping, path: Sequence,expected_output):
+    def test_access_nested_map(
+            self, nested_map: Mapping, path: Sequence, expected_output):
         '''
         Function to test access_nested_map from utils
         '''
@@ -62,6 +63,7 @@ class TestMemoize(unittest.TestCase):
         '''
         Test class
         '''
+
         def a_method(self):
             '''
             Function to return 42
@@ -87,10 +89,10 @@ class TestMemoize(unittest.TestCase):
             result2 = instance.a_property
 
             mock_a_method.assert_called_once()
-            
+
             self.assertEqual(result1, 42)
-            self.assertEqual(result2, 42)              
+            self.assertEqual(result2, 42)
+
 
 if __name__ == '__main__':
-    unittest.main()    
-    
+    unittest.main()
