@@ -5,38 +5,40 @@ from rest_framework import status
 from rest_framework.decorators import action 
 from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer, UsersSerializer
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 
-class ConversationViewSet(ViewSet):
+class ConversationViewSet(ModelViewSet):
 	queryset = Conversation.objects.all()
+	serializer_class = ConversationSerializer
+	filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+	filterset_fields = ['participants']
+	search_fields = ['participants__email'] 
 
-	def list(self, request):
-		serializer = ConversationSerializer(self.queryset, many=True)
-		return Response(serializer.data)
-	
-
-	def create(self, request, *args, **kwargs):
-		serializer = ConversationSerializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	def get_queryset(self):
+		user = self.request.user
+		return Conversation.objects.filter(participants=user)
 
 
 
-class MessageViewSet(ViewSet):
+class MessageViewSet(ModelViewSet):
 	queryset = Message.objects.all()
+	filter_backends = [DjangoFilterBackend, filters.SearchFilter] 
+	filterset_fields = ['conversation', 'sender'] 
+	search_fields = ['message_body']
+	serializer_class = MessageSerializer
 
-
-	def list(self, request):
-		serializer =  MessageSerializer(self.queryset, many=True)
-		return Response(serializer.data)
-	
 
 	@action(detail=False, methods=['post'])
 	def send_message(self, request):
-		serializer = MessageSerializer(data=request.data)
+		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid(raise_exception=True):
 			serializer.save(sender=request.user)
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	
+
+	def get_queryset(self):
+		user = self.request.user
+		return Message.objects.filter(conversation__participants=user)

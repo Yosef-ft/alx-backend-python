@@ -21,7 +21,7 @@ class UsersSerializer(serializers.ModelSerializer):
 	def validate_password(self, value):
 
 		if len(value) < 8:
-			raise ValidationError("Password must be at least 8 chars long")
+			raise serializers.ValidationError("Password must be at least 8 chars long")
 		return value
 	
 	def create(self, validated_data):
