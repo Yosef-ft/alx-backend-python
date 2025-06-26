@@ -7,7 +7,7 @@ from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer, UsersSerializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
-
+from django.http import Http404
 
 class ConversationViewSet(ModelViewSet):
 	queryset = Conversation.objects.all()
@@ -40,5 +40,10 @@ class MessageViewSet(ModelViewSet):
 	
 
 	def get_queryset(self):
+		conversation_id = self.kwargs['conversation_pk']
+
 		user = self.request.user
-		return Message.objects.filter(conversation__participants=user)
+		if not Conversation.objects.filter(pk=conversation_id, participants=user).exists():
+			raise Http404
+
+		return Message.objects.filter(conversation_id=conversation_id)
