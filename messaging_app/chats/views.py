@@ -10,6 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .permissions import IsParticipantOfConversation
+from .filters import MessageFilter
 
 class ConversationViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated, IsParticipantOfConversation]
@@ -29,7 +30,7 @@ class MessageViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated, IsParticipantOfConversation]
 	queryset = Message.objects.all()
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter] 
-	filterset_fields = ['conversation', 'sender'] 
+	filterset_class = MessageFilter
 	search_fields = ['message_body']
 	serializer_class = MessageSerializer
 
