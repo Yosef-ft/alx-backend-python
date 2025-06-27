@@ -10,6 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.http import Http404
 
 class ConversationViewSet(ModelViewSet):
+	permission_classes = ["IsAuthenticated", "HTTP_403_FORBIDDEN"]
 	queryset = Conversation.objects.all()
 	serializer_class = ConversationSerializer
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -23,6 +24,7 @@ class ConversationViewSet(ModelViewSet):
 
 
 class MessageViewSet(ModelViewSet):
+	permission_classes = ["IsAuthenticated", "HTTP_403_FORBIDDEN"]
 	queryset = Message.objects.all()
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter] 
 	filterset_fields = ['conversation', 'sender'] 
