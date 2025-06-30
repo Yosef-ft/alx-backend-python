@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action 
 from .models import Conversation, Message
-from .serializers import ConversationSerializer, MessageSerializer, UsersSerializer
+from .serializers import ConversationSerializer, MessageSerializer, MessageSendSerializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import Http404
@@ -32,23 +32,31 @@ class MessageViewSet(ModelViewSet):
 	filter_backends = [DjangoFilterBackend, filters.SearchFilter] 
 	filterset_class = MessageFilter
 	search_fields = ['message_body']
-	serializer_class = MessageSerializer
+	serializer_class = MessageSendSerializer
 
 
 	@action(detail=False, methods=['post'])
-	def send_message(self, request):
-		serializer = self.get_serializer(data=request.data)
+	def send_message(self, request, conversation_pk):
+		try:
+			conversation = Conversation.objects.get(pk=conversation_pk)
+		except Conversation.DoesNotExist:
+			return Response(
+				{"detail" : "Conversation not found"},
+				status=status.HTTP_400_BAD_REQUEST				
+			)
+
+		if not conversation.participants.filter(pk=request.user.pk).exists():
+			return Response(
+                {"detail": "You are not a participant in this conversation"},
+                status=status.HTTP_403_FORBIDDEN					
+			)
+		
+		serializer = self.get_serializer(data=request.data)		
 		if serializer.is_valid(raise_exception=True):
-			serializer.save(sender=request.user)
+			serializer.save(
+				sender = request.user,
+				conversation=conversation
+			)
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)			
 	
-
-	def get_queryset(self):
-		conversation_id = self.kwargs['conversation_pk']
-
-		user = self.request.user
-		if not Conversation.objects.filter(pk=conversation_id, participants=user).exists():
-			raise Http404
-
-		return Message.objects.filter(conversation_id=conversation_id)

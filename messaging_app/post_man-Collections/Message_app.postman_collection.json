@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "b0a0739e-9c01-4e9d-9e14-03a2adb7bdf2",
+		"name": "ALX_Message_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35125123"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"username\":\"testuser\",\n    \"email\": \"test@example.com\",\n    \"first_name\":\"test\",\n    \"last_name\":\"user\",\n    \"password\":\"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "converstations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUxMjA3MzMxLCJpYXQiOjE3NTEyMDcwMzEsImp0aSI6IjEwY2YxMDQwNTBjMzQ1ZGY4ZGZiZDA5OTMxMjE3NWEyIiwidXNlcl9pZCI6ImVkMjhjZDM4LWJkMjEtNGI4ZS04MDA1LTlkOWRiMTg0ZjFhZSJ9.tAO1w2cuX2yQqpnJi5Kkjqb0N3kkmo8wwC4747tan4E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"username\":\"testuser\",\n    \"email\": \"test@example.com\",\n    \"first_name\":\"test\",\n    \"last_name\":\"user\",\n    \"password\":\"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/conversations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"conversations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "specific_conversation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUxMjA4MjY2LCJpYXQiOjE3NTEyMDc5NjYsImp0aSI6IjZlMGMwNWYwYTY5ZDQ3OWFhZjdmYzBjYTVhZjIwMTliIiwidXNlcl9pZCI6ImVkMjhjZDM4LWJkMjEtNGI4ZS04MDA1LTlkOWRiMTg0ZjFhZSJ9.TQGCiKL-BgWjxBrmnunmmK8JxGTUw6I3Wj4jO4HLI24",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"username\":\"testuser\",\n    \"email\": \"test@example.com\",\n    \"first_name\":\"test\",\n    \"last_name\":\"user\",\n    \"password\":\"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/conversations/19a0c389-7e40-4aa1-863b-d05ed1403d6a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"conversations",
+						"19a0c389-7e40-4aa1-863b-d05ed1403d6a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send_message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUxMzE0NDYyLCJpYXQiOjE3NTEzMTQxNjIsImp0aSI6ImY5NDc4YjkyNDVkMzQ1Mzc5NTFmZDA5Yzc5ZWMyZWQ5IiwidXNlcl9pZCI6ImVkMjhjZDM4LWJkMjEtNGI4ZS04MDA1LTlkOWRiMTg0ZjFhZSJ9.dr7-zfX7CbpiwqkmRHGIXggQInvNCdp-aNaYxIpUUzI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message_body\": \"Hello world!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/conversations/19a0c389-7e40-4aa1-863b-d05ed1403d6a/messages/send_message/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"conversations",
+						"19a0c389-7e40-4aa1-863b-d05ed1403d6a",
+						"messages",
+						"send_message",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_conversations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUxMjA3NzUzLCJpYXQiOjE3NTEyMDc0NTMsImp0aSI6IjYwZjlhOGY2YmI5MTRkY2Y4MTYyMTJkMzAxZDVlNTVmIiwidXNlcl9pZCI6ImVkMjhjZDM4LWJkMjEtNGI4ZS04MDA1LTlkOWRiMTg0ZjFhZSJ9.JuHC36leOV1P7KZZoXrv7x1CLZrc_ltF7UniIiUgeuw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"participants\" : [\"ed28cd38bd214b8e80059d9db184f1ae\", \"a185703ad517488fa3ec9e503b577fcc\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/conversations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"conversations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/token/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MTI5MzQzMSwiaWF0IjoxNzUxMjA3MDMxLCJqdGkiOiJjY2ZjYTRiYmI2NTM0Y2M0ODYyZDFlZmIwY2Y2MmU2ZCIsInVzZXJfaWQiOiJlZDI4Y2QzOC1iZDIxLTRiOGUtODAwNS05ZDlkYjE4NGYxYWUifQ.Dk4_RAWCi8wu9lFQB0okO4dxekEdltsFqKh2AICQtmw\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/token/refresh/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						"refresh",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -12,6 +12,7 @@ class users(AbstractUser):
 	first_name = models.CharField(_('first_name'),max_length=255)
 	last_name = models.CharField(_('last_name'),max_length=255)
 	password = models.CharField(_('password'), max_length=128)
+	username = models.CharField(_('username'), max_length=128)
 		
 
 	USERNAME_FIELD = 'email'
