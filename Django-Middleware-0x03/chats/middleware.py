@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseForbidden
+import time
 
 User = get_user_model()
 
@@ -8,7 +10,7 @@ class RequestLoggingMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
-        # Ensure the log file exists
+        
         log_file_path = settings.BASE_DIR / 'requests.log'
         if not log_file_path.exists():
             with open(log_file_path, 'w'):
@@ -41,5 +43,31 @@ class RestrictAccessByTimeMiddleware:
             from django.http import HttpResponseForbidden
             return HttpResponseForbidden("Access denied outside of 6:00PM to 9:00PM.")
         
+        response = self.get_response(request)
+        return response
+
+
+class OffensiveLanguageMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.requests_log = {}
+
+    def __call__(self, request):
+        if request.method == 'POST':
+            ip_address = request.META.get('REMOTE_ADDR')
+            current_time = time.time()
+
+            if ip_address in self.requests_log:
+                last_request_time, request_count = self.requests_log[ip_address]
+                
+                if current_time - last_request_time > 60:
+                    self.requests_log[ip_address] = (current_time, 1)
+                else:
+                    if request_count >= 5:
+                        return HttpResponseForbidden("Rate limit exceeded. Please try again later.")
+                    self.requests_log[ip_address] = (last_request_time, request_count + 1)
+            else:
+                self.requests_log[ip_address] = (current_time, 1)
+
         response = self.get_response(request)
         return response
