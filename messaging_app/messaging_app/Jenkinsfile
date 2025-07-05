@@ -1,0 +1,37 @@
+pipeline{
+    agent any
+
+    stages{
+        stage("Pulls messaging app"){
+            steps{
+                git(
+                    url: 'https://github.com/Yosef-ft/alx-backend-python.git',
+                    branch: 'main',
+                    credentialsId: 'messaging-app-token'
+                )
+            }
+        }
+        stage("Install dependencies"){
+            steps{
+                sh '''
+                    python3 -m venv .venv
+                    source .venv/bin/activate
+                    pip install -r requirements.txt
+                '''
+            }
+        }
+        stage("Run test"){
+            steps{
+                sh'''
+                   source .venv/bin/activate
+                   pytest --junitxml="test-report.xml" 
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            junit(testResults: 'test-report.xml')
+        }
+    }    
+}
