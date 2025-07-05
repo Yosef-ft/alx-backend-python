@@ -6,6 +6,7 @@ pipeline{
             steps{
                 git(
                     url: 'https://github.com/Yosef-ft/alx-backend-python.git',
+                    // git branch
                     branch: 'main',
                     credentialsId: 'messaging-app-token'
                 )
@@ -16,7 +17,7 @@ pipeline{
                 sh '''
                     python3 -m venv .venv
                     source .venv/bin/activate
-                    // "messaging_app/requirements.txt", "pip3 install"
+                    # "messaging_app/requirements.txt", "pip3 install"
                     pip install -r requirements.txt
                 '''
             }
