@@ -4,10 +4,17 @@ pipeline{
     }
 
     stages{
+        stage('Prepare Environment') {
+            steps {
+                sh 'apt-get update && apt-get install -y git docker-ce-cli'
+            }
+        }      
+
         stage("Pulls messaging app"){
             steps{
                 git(
                     url: 'https://github.com/Yosef-ft/alx-backend-python.git',
+                    // git branch
                     branch: 'main',
                     credentialsId: 'messaging-app-token'
                 )
@@ -51,7 +58,9 @@ pipeline{
     }
     post {
         always {
-            junit(testResults: 'test-report.xml')
+            node {
+                junit 'path/to/results.xml'
+            }
         }
     }    
 }
