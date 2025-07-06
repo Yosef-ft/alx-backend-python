@@ -15,11 +15,11 @@ jobs:
           run: |
             cd messaging_app
 
-            echo "MYSQL_DATABASE=ci_message_app" >> messaging_app/.env
-            echo "MYSQL_USER=ci_user" >> messaging_app/.env
-            echo "MYSQL_PASSWORD=ci_password" >> messaging_app/.env
-            echo "MYSQL_HOST=db" >> messaging_app/.env
-            echo "MYSQL_ROOT_PASSWORD=root_pass" >> messaging_app/.env            
+            echo "MYSQL_DATABASE=ci_message_app" >> .env
+            echo "MYSQL_USER=ci_user" >> .env
+            echo "MYSQL_PASSWORD=ci_password" >> .env
+            echo "MYSQL_HOST=db" >> .env
+            echo "MYSQL_ROOT_PASSWORD=root_pass" >> .env            
 
             docker compose build --no-cache --force-rm 
 
