@@ -12,6 +12,12 @@ jobs:
         steps:
         - uses: actions/checkout@v3
         - name: Build the Docker image
+          env:
+            MYSQL_USER: ci_user
+            MYSQL_PASSWORD: ci_password
+            MYSQL_HOST: db
+            MYSQL_ROOT_PASSWORD: root_pass
+            MYSQL_DATABASE: ci_message_app            
           run: |
             cd messaging_app
             docker compose build --no-cache --force-rm 
