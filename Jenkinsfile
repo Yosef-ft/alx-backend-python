@@ -1,5 +1,7 @@
 pipeline{
-    agent any
+    agent {
+        docker { image 'python:3.10-slim' }
+    }
 
     stages{
         stage("Pulls messaging app"){
