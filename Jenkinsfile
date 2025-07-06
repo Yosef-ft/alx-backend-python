@@ -10,7 +10,15 @@ pipeline{
             }
         }      
 
-
+        stage("Pulls messaging app"){
+            steps{
+                git(
+                    url: 'https://github.com/Yosef-ft/alx-backend-python.git',                    // git branch
+                    branch: 'main',
+                    credentialsId: 'messaging-app-token'
+                )
+            }
+        }
         stage("Install dependencies"){
             steps{
                 sh '''
@@ -49,9 +57,7 @@ pipeline{
     }
     post {
         always {
-            node {
-                junit 'path/to/results.xml'
-            }
+            junit 'path/to/results.xml'
         }
     }    
 }
