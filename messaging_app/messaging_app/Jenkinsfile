@@ -18,16 +18,33 @@ pipeline{
                     python3 -m venv .venv
                     source .venv/bin/activate
                     # "messaging_app/requirements.txt", "pip3 install"
-                    pip install -r requirements.txt
+                    pip install -r messaging_app/requirements.txt
                 '''
             }
         }
         stage("Run test"){
             steps{
-                sh'''
+                sh '''
                    source .venv/bin/activate
-                   pytest --junitxml="test-report.xml" 
+                   pytest messaging_app/ --junitxml="test-report.xml" 
                 '''
+            }
+        }
+        stage("Build and push to docker hub"){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+                        IMAGE_NAME="yosefft/messaging-app:latest"
+
+                        docker build -t $IMAGE_NAME messaging_app/
+                        docker push $IMAGE_NAME
+
+                        docker logout
+                    '''
+                }
             }
         }
     }
